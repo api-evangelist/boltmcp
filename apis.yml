@@ -1,23 +1,151 @@
 aid: boltmcp
 name: BoltMCP
-description: BoltMCP is a company surfaced via direct outreach and added to the network as a stub for
-  full-pipeline profiling.
+description: 'BoltMCP is a UK company (BoltMCP Limited) selling a self-hosted platform for creating and
+  managing secured Model Context Protocol (MCP) servers inside an organization''s own infrastructure.
+  A single Helm chart deploys the full stack into one Kubernetes namespace - a web dashboard, an internal
+  REST API, a "gold image" MCP server, the MCP Inspector playground, and optional bundled PostgreSQL,
+  Keycloak and HashiCorp Vault. The product''s pitch is token-efficient MCP: progressive disclosure and
+  lazy tool registration instead of preloading every tool into an agent''s context, with tools composed
+  declaratively from existing REST/gRPC APIs, company docs and API hubs. Auth, RBAC, secrets and observability
+  are delegated to infrastructure the customer already runs. Nothing is operated by BoltMCP as a cloud
+  service - there is no vendor-hosted API, no public sign-up and no published pricing; access is by design-partner
+  arrangement to a preview release.'
+image: https://www.boltmcp.io/boltmcp-logo/icon/icon-mark-light-original.png
 url: https://raw.githubusercontent.com/api-evangelist/boltmcp/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:direct-outreach
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-09-14'
 modified: '2026-09-14'
 tags:
 - Company
-apis: []
+- MCP
+- Agents
+- Artificial Intelligence
+- Kubernetes
+- Self-Hosted
+- Enterprise
+- Identity
+- Developer Tools
+tags_raw:
+- Company
+- Model Context Protocol
+- MCP
+- Agents
+- Artificial Intelligence
+- Kubernetes
+- Self-Hosted
+- Enterprise
+- Identity
+- Developer Tools
+apis:
+- aid: boltmcp:boltmcp-mcp-server
+  name: BoltMCP MCP Server
+  description: The MCP server the BoltMCP Helm chart deploys into the customer's own Kubernetes cluster.
+    Customers define their own servers and tools through the BoltMCP dashboard, so the tool surface is
+    tenant-defined rather than a fixed public catalog. The chart derives the public hostname from global.domain
+    and the ingress documentation names server.<domain> as the externally routed host; agents and MCP
+    clients connect there over HTTP, authenticating against the deployment's OIDC provider.
+  humanURL: https://install.boltmcp.io/docs/architecture
+  image: https://www.boltmcp.io/boltmcp-logo/icon/icon-mark-light-original.png
+  baseURL: https://server.{global.domain}/
+  tags:
+  - MCP
+  - Agents
+  - Self-Hosted
+  tags_raw:
+  - Model Context Protocol
+  - Agents
+  - Self-Hosted
+  properties:
+  - type: MCPServer
+    url: mcp/boltmcp-mcp.yml
+  - type: Documentation
+    url: https://install.boltmcp.io/docs/ingress-tls
+- aid: boltmcp:boltmcp-rest-api
+  name: BoltMCP REST API
+  description: The internal REST API service (boltmcp-rest-api, container port 3003) that backs the BoltMCP
+    dashboard and the deployed MCP servers. It is deliberately NOT given a public ingress hostname by
+    the chart - the documented hostname table covers only web, auth, server and inspector - so it is reachable
+    only inside the cluster. Documented surface includes the /api/v1/secrets/* endpoints backed by the
+    bundled Vault, and a platform-wide 10 MB request-body limit enforced on every request. No OpenAPI
+    description is published publicly.
+  humanURL: https://install.boltmcp.io/docs/architecture
+  image: https://www.boltmcp.io/boltmcp-logo/icon/icon-mark-light-original.png
+  baseURL: http://boltmcp-rest-api:3003/api/v1
+  x-base-url-note: Cluster-internal Kubernetes Service address, taken verbatim from the published architecture
+    and configuration reference. BoltMCP publishes no public base URL for this service because the chart
+    does not expose it through ingress.
+  tags:
+  - REST
+  - Self-Hosted
+  properties:
+  - type: Documentation
+    url: https://install.boltmcp.io/docs/configuration-reference
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DomainSecurity
+  url: security/boltmcp-domain-security.yml
 - type: Website
   url: https://www.boltmcp.io/
+- type: Documentation
+  url: https://install.boltmcp.io/docs
+- type: GettingStarted
+  url: https://install.boltmcp.io/docs/prerequisites
+- type: Blog
+  url: https://www.boltmcp.io/blog
+- type: GitHubOrganization
+  url: https://github.com/boltmcp
+- type: LinkedIn
+  url: https://www.linkedin.com/company/boltmcp
+- type: Twitter
+  url: https://x.com/boltmcp
+- type: Packages
+  url: packages/boltmcp-packages.yml
+- type: LLMsTxt
+  url: llms/boltmcp-llms.txt
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Authentication
+  url: authentication/boltmcp-authentication.yml
+- type: OAuthScopes
+  url: scopes/boltmcp-scopes.yml
+- type: Conventions
+  url: conventions/boltmcp-conventions.yml
+- type: ErrorCatalog
+  url: errors/boltmcp-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/boltmcp-lifecycle.yml
+- type: ChangeLog
+  url: changelog/boltmcp-changelog.yml
+- type: Conformance
+  url: conformance/boltmcp-conformance.yml
+- type: Sandbox
+  url: sandbox/boltmcp-sandbox.yml
+- type: Plans
+  url: plans/boltmcp-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/boltmcp-rate-limits.yml
+x-enrichment:
+  date: '2026-09-14'
+  status: enriched
+  artifacts_added: 18
+  pass: local-v3
+x-coverage:
+  state: covered
+  reason: null
+  detail: BoltMCP publishes no OpenAPI, and none exists to find - the product is a self-hosted MCP server
+    platform whose REST API is never exposed through ingress, and whose per-tenant MCP tool surface is
+    defined by the customer. The public surface that does exist was harvested in full - an llms.txt, a
+    provider-published Agent Skill, seven first-party npm packages, and a detailed installation/configuration
+    reference from which auth, scopes, conventions, errors, lifecycle and conformance were read.
+  evidence:
+  - url: https://install.boltmcp.io/llms.txt
+    status: 200
+  - url: https://www.boltmcp.io/openapi.json
+    status: 404
+  checked: '2026-09-14'
