@@ -1,0 +1,10 @@
+generated: '2026-09-14'
+method: searched
+source: https://install.boltmcp.io/llms.txt
+file: boltmcp-llms.txt
+http_status: 200
+note: >-
+  Served verbatim by the BoltMCP installation docs host (install.boltmcp.io). The apex and www hosts
+  (boltmcp.io / www.boltmcp.io) return 404 for /llms.txt. An llms-full.txt is also served at
+  https://install.boltmcp.io/llms-full.txt (200, ~148 KB); it is deliberately not committed here per
+  the pipeline's *-llms-full.txt rule.

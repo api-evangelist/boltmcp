@@ -1,0 +1,66 @@
+generated: '2026-09-14'
+method: searched
+source: https://install.boltmcp.io/docs/sign-in
+docs: https://install.boltmcp.io/docs/sign-in
+note: >-
+  Derived from no OpenAPI - BoltMCP publishes none. This profile is read from the published
+  installation documentation, which describes the identity layer of a BoltMCP deployment in detail.
+  Every surface in a BoltMCP install authenticates through OpenID Connect against an identity
+  provider the customer runs; the chart bundles Keycloak 26.7.0 as the default, and the architecture
+  page names Okta, Microsoft Entra and Ping Identity as supported alternatives.
+summary:
+  types: [openIdConnect, oauth2]
+  api_key_in: []
+  oauth2_flows: [authorizationCode, clientCredentials]
+  identity_provider_default: keycloak
+  identity_provider_byo: [Okta, Microsoft Entra, Ping Identity]
+  mfa: delegated to the identity provider
+schemes:
+- name: oidc
+  type: openIdConnect
+  provider: keycloak
+  realm: boltmcp
+  issuer_template: https://auth.{global.domain}/realms/boltmcp
+  discovery: >-
+    Services fetch the OIDC discovery document from the PUBLIC issuer URL server-side, which is why
+    the troubleshooting docs call out split-horizon DNS as a failure mode.
+  sources: [https://install.boltmcp.io/docs/troubleshooting]
+clients:
+- client_id: boltmcp-web
+  purpose: the dashboard authenticating end users
+  secret_key: web-client-secret
+- client_id: boltmcp-mcp-server
+  purpose: the MCP servers authenticating users and agents
+  secret_key: mcp-server-client-secret
+- client_id: boltmcp-rest-api
+  purpose: the internal REST API verifying tokens
+  status: redundant as of chart 0.5.x - the migration guide says it may be deleted
+- client_id: boltmcp-rest-api-to-keycloak
+  purpose: the REST API's Keycloak Admin service account
+  secret_key: rest-api-to-keycloak-client-secret
+- client_id: boltmcp-mcp-server-to-rest-api
+  purpose: pre-configured so a first MCP server can authenticate users with the internal API
+- client_id: boltmcp-mcp-server-to-keycloak
+  purpose: pre-configured so a first MCP server can authenticate users with the Keycloak Admin API
+dynamic_client_registration:
+  supported: true
+  mechanism: CIMD client policies in the boltmcp Keycloak realm
+  note: >-
+    "MCP clients such as Claude don't need a pre-configured client: they register themselves via the
+    realm's CIMD client policies when connecting." Quoted verbatim from the Sign In documentation.
+  source: https://install.boltmcp.io/docs/sign-in
+user_requirements:
+  required_claims: [email, given_name]
+  note: >-
+    BoltMCP requires users to have an email and a first name to sign in; the auto-provisioned
+    boltmcp_admin user gets both at realm-import time.
+  source: https://install.boltmcp.io/docs/troubleshooting
+secrets_management:
+  store: HashiCorp Vault (bundled) via Kubernetes auth
+  kv_path_prefix: boltmcp/server-env-api-cred
+  rotation_procedure: https://install.boltmcp.io/docs/rotating-secrets
+  external_options: [External Secrets Operator, Sealed Secrets, SOPS]
+gaps:
+- No public, vendor-operated authentication surface exists - every credential is provisioned inside
+  the customer's own deployment.
+- No OpenAPI securitySchemes could be read, because no OpenAPI is published.

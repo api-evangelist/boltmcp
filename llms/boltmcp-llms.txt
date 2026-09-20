@@ -1,0 +1,29 @@
+# Docs
+
+
+- **Getting Started**
+- [Installation](/docs): Install BoltMCP with Claude, or skip this page to install manually
+- [Prerequisites](/docs/prerequisites): Install the required CLI tools on your local workstation.
+- [Cluster Provisioning](/docs/cluster-provisioning): Provision a Kubernetes cluster ready for BoltMCP.
+- [Cluster Preparation](/docs/cluster-preparation): Create the boltmcp namespace, add the image pull secret, create three application Secrets, and authenticate Helm against the BoltMCP container registry.
+- [Deployment](/docs/deployment): Configure your values file, install the Helm chart, and verify the running services.
+- [Ingress & TLS](/docs/ingress-tls): Expose BoltMCP publicly. Reference setup with NGINX Ingress Controller and automatic HTTPS certificates.
+- [Sign In](/docs/sign-in): Retrieve your SSO login credentials and sign in to the BoltMCP dashboard, docs, and Keycloak admin console.
+- [Vault Secret Store](/docs/vault-secret-store): Initialise, unseal, and bootstrap the bundled HashiCorp Vault used to store API credentials.
+
+- **Maintenance**
+- [Migration Guide](/docs/migration-guide): Breaking changes to apply before upgrading BoltMCP, listed by chart version.
+- [Manual Upgrade](/docs/upgrading): Upgrade BoltMCP to a new chart release with helm upgrade.
+- [Rotating Secrets](/docs/rotating-secrets): Rotate the OIDC client secrets in the boltmcp-oidc Secret and propagate the new values to Keycloak and the pods that use them.
+- [Uninstall & Cleanup](/docs/uninstall): Remove BoltMCP and associated resources.
+
+- **Reference**
+- [Architecture](/docs/architecture): ...
+- [Configuration Reference](/docs/configuration-reference): Complete reference for all configurable values of the BoltMCP Helm chart.
+- [Troubleshooting](/docs/troubleshooting): Common issues and diagnostic commands.
+
+- **For Production**
+- [Security Hardening](/docs/security-hardening): Recommended hardening steps for a public BoltMCP deployment.
+- [Vault Auto-unseal](/docs/vault-auto-unseal): ...
+- [External Secrets Operator](/docs/external-secrets-operator): Sync BoltMCP's application Secrets from HashiCorp Vault (or a cloud secrets manager) using the External Secrets Operator.
+- [Sealed Secrets & SOPS](/docs/sealed-secrets-and-sops): Manage BoltMCP's application Secrets in Git using Sealed Secrets or SOPS.

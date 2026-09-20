@@ -1,0 +1,29 @@
+# Front Door AI Index — boltmcp — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: boltmcp
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: www.boltmcp.io
+  final_host: www.boltmcp.io
+  ownership: own
+  owner: boltmcp
+  shares_host_with: null
+  inherited_from: null
+  verdict: scored
+  score: 9
+  host_score: 9
+  density: 37.34
+  words: 241
+  tiers:
+    agentic: 6
+    core: 3
+    model: 0
+  ambiguous: 3
+  top_terms:
+    MCP: 5
+    agent: 3
+    LLMs: 2
+    AI: 1
+    RAG: 1

@@ -1,0 +1,110 @@
+generated: '2026-09-14'
+method: searched
+source: https://install.boltmcp.io/docs
+note: >-
+  BoltMCP publishes no OpenAPI and no public API reference, so these conventions are read from the
+  installation documentation, which is the only machine-readable-adjacent surface the company
+  publishes. They describe the internal REST API and the deployed MCP server as an operator
+  encounters them. Every field below is either quoted from the docs or recorded as absent.
+authentication:
+  style: OIDC bearer token
+  detail: see authentication/boltmcp-authentication.yml
+versioning:
+  api_path: /api/v1
+  scheme: uri-path for the REST API; semantic versioning for the Helm chart (current 0.5.9)
+  header: null
+  source: https://install.boltmcp.io/docs/troubleshooting
+request_limits:
+  max_body_bytes: 10485760
+  max_body_human: 10 MB
+  enforced_by: >-
+    The BoltMCP REST API enforces the 10 MB limit on every request itself. The ingress must also be
+    configured to allow it (nginx.ingress.kubernetes.io/proxy-body-size "10m"); the chart-managed
+    Ingress applies that annotation for you. Raising it above 10m has no effect.
+  status_on_exceed: 413
+  source: https://install.boltmcp.io/docs/ingress-tls
+idempotency:
+  supported: false
+  coverage: none
+  header: null
+  scope: []
+  note: >-
+    No idempotency key, replay window or deduplication contract is documented anywhere in BoltMCP's
+    public documentation. The only use of the word "idempotent" in the docs describes the Vault
+    bootstrap being safe to re-run, which is an operator procedure, not an API contract. Recorded as
+    `none` rather than left unstated; no Idempotency pointer is emitted.
+pagination:
+  style: null
+  note: Not documented. No public API reference exists to read it from.
+field_expansion:
+  supported: null
+  note: Not documented.
+metadata:
+  supported: null
+  note: Not documented.
+request_tracing:
+  request_id_header: null
+  note: >-
+    Not documented as an HTTP contract. Observability is delegated - the architecture page shows the
+    MCP server and REST API emitting OpenTelemetry to the customer's own platform (Datadog, Splunk,
+    Grafana).
+  source: https://install.boltmcp.io/docs/architecture
+error_envelope:
+  format: null
+  rfc9457: false
+  note: >-
+    No problem-details envelope is documented. The only error shapes published are HTTP status codes
+    with operator-facing meanings; see errors/boltmcp-problem-types.yml.
+rate_limit_signaling:
+  headers: []
+  status_on_exhaustion: null
+  note: >-
+    BoltMCP publishes no rate limits and returns no documented rate-limit headers. The security
+    hardening page recommends the OPERATOR add ingress-level limits
+    (nginx.ingress.kubernetes.io/limit-rps "10", limit-connections "5") - that is advice to the
+    self-hoster, not a contract BoltMCP offers. See rate-limits/boltmcp-rate-limits.yml.
+  source: https://install.boltmcp.io/docs/security-hardening
+dry_run_mode:
+  supported: null
+  grade: na
+  note: >-
+    No write surface is publicly described in API terms, so there is nothing to rehearse against. Not
+    penalised; recorded as not applicable to the published surface.
+reversibility:
+  grade: documented
+  window_stated: false
+  reversals:
+  - action: a running MCP server
+    reversal: disable the server
+    operation_id: null
+    window: null
+    evidence: https://www.boltmcp.io/
+  - action: a user's access to a deployment
+    reversal: revoke user access
+    operation_id: null
+    window: null
+    evidence: https://www.boltmcp.io/
+  - action: an exposed tool
+    reversal: restrict the specific tool
+    operation_id: null
+    window: null
+    evidence: https://www.boltmcp.io/
+  - action: a chart upgrade
+    reversal: helm rollback / re-run helm upgrade after clearing a stuck pending-upgrade release
+    operation_id: null
+    window: null
+    evidence: https://install.boltmcp.io/docs/upgrading
+  note: >-
+    BoltMCP advertises a "kill switch" - instantly disable servers, revoke user access, or restrict
+    specific tools - and that is a real, prominently-claimed reversal path for the platform's most
+    consequential state. It is graded `documented` and not `verified` because the claim sits on the
+    marketing page with no operation, procedure or time window attached, and the dashboard docs that
+    would carry those ship inside the deployment behind SSO. No window is asserted here, because none
+    is published.
+cross_links:
+  authentication: authentication/boltmcp-authentication.yml
+  scopes: scopes/boltmcp-scopes.yml
+  errors: errors/boltmcp-problem-types.yml
+  lifecycle: lifecycle/boltmcp-lifecycle.yml
+  rate_limits: rate-limits/boltmcp-rate-limits.yml
+  mcp: mcp/boltmcp-mcp.yml

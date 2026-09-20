@@ -1,0 +1,16 @@
+generated: '2026-09-14'
+method: searched
+source: https://www.boltmcp.io/
+plan_count: 0
+currency: null
+plans: []
+note: >-
+  BoltMCP publishes no pricing of any kind. There is no /pricing page (404), no plans page, no
+  self-serve sign-up and no login. The site's only conversion path is a "Become a design partner"
+  dialog whose own copy reads "Send us an email and we'll arrange a call to understand your needs and
+  get you access to our preview release". The product is distributed as a Helm chart from a private
+  registry that requires a BoltMCP-issued access key, so commercial terms are arranged per customer.
+  This is an honest zero, recorded rather than omitted.
+evidence:
+- {url: 'https://www.boltmcp.io/pricing', status: 404}
+- {url: 'https://www.boltmcp.io/', status: 200, note: 'CTA is a contact dialog, not a plan table'}

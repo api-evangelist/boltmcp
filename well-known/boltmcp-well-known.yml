@@ -1,0 +1,68 @@
+generated: '2026-09-14'
+method: probed
+source: live probe of every host this record knows
+hit_count: 0
+path_echo_control: passed
+note: >-
+  Every named /.well-known path was probed on all three hosts BoltMCP serves (the apex, www, and the
+  installation docs host). Nothing was found. www.boltmcp.io and boltmcp.io are one Next.js app that
+  returns a real HTTP 404 with an 8,255-byte HTML error page for every miss; install.boltmcp.io
+  returns a 404 with a 10,893-byte HTML page. Neither is a soft-200 catch-all, and the negative
+  control path returned 404 on all three hosts, so the misses are genuine. No WellKnown and no
+  SecurityTxt pointer is emitted. install.boltmcp.io does serve /llms.txt and /llms-full.txt (both
+  200) - captured under llms/, not here. No additional hosts exist to probe - api., app., docs.,
+  mcp. and auth. under boltmcp.io have no DNS records, and the product's own service hostnames
+  (web./auth./server./inspector.<domain>) live on each customer's domain, not BoltMCP's.
+hosts:
+- host: https://www.boltmcp.io
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/oauth-protected-resource, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+  - {path: /.well-known/ucp.json, status: 404}
+  - {path: /.well-known/acp.json, status: 404}
+  - {path: /.well-known/aauth-resource.json, status: 404}
+  - {path: /.well-known/agent-card.json, status: 404}
+  - {path: /.well-known/agent.json, status: 404}
+  - {path: /.well-known/apis.json, status: 404}
+  - {path: /apis.json, status: 404}
+  - {path: /apis.yml, status: 404}
+  - {path: /.well-known/boltmcp-negative-control-7f3ab91c.json, status: 404, control: negative}
+- host: https://boltmcp.io
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/oauth-protected-resource, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+  - {path: /.well-known/ucp.json, status: 404}
+  - {path: /.well-known/acp.json, status: 404}
+  - {path: /.well-known/aauth-resource.json, status: 404}
+  - {path: /.well-known/agent-card.json, status: 404}
+  - {path: /.well-known/agent.json, status: 404}
+  - {path: /.well-known/apis.json, status: 404}
+  - {path: /apis.json, status: 404}
+  - {path: /apis.yml, status: 404}
+  - {path: /.well-known/boltmcp-negative-control-7f3ab91c.json, status: 404, control: negative}
+- host: https://install.boltmcp.io
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/oauth-protected-resource, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+  - {path: /.well-known/ucp.json, status: 404}
+  - {path: /.well-known/acp.json, status: 404}
+  - {path: /.well-known/aauth-resource.json, status: 404}
+  - {path: /.well-known/agent-card.json, status: 404}
+  - {path: /.well-known/agent.json, status: 404}
+  - {path: /.well-known/apis.json, status: 404}
+  - {path: /apis.json, status: 404}
+  - {path: /apis.yml, status: 404}
+  - {path: /.well-known/boltmcp-negative-control-7f3ab91c.json, status: 404, control: negative}
+  - {path: /llms.txt, status: 200, file: ../llms/boltmcp-llms.txt, note: not a /.well-known path; recorded for completeness}

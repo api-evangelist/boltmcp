@@ -1,0 +1,71 @@
+generated: '2026-09-14'
+method: searched
+source: https://install.boltmcp.io/docs/ingress-tls
+status: published
+deployment:
+  mode: remote
+  endpoint: https://server.{global.domain}/
+  install: null
+  package: oci://europe-west2-docker.pkg.dev/boltmcp-platform/boltmcp-alpha/charts/boltmcp
+  auth: oauth
+  verified: searched
+  x-hosting: self-hosted
+  x-vendor-hosted-endpoint: none
+  x-agent-reachable-today: false
+  x-endpoint-note: >-
+    BoltMCP operates NO public MCP endpoint of its own. The endpoint above is the hostname template
+    the Helm chart derives and the ingress documentation publishes verbatim - `server.<domain>` routed
+    to the in-cluster Service `boltmcp-mcp-server` on port 3001, where `<domain>` is the value the
+    customer sets as `global.domain` (overridable via `mcpServer.baseUrl`). It is recorded as a
+    template, not resolved, because every deployment lives on its own customer domain. The path an
+    MCP client POSTs to under that host is not published in the installation docs; the dashboard docs
+    that cover connecting MCP clients ship inside the deployment, behind SSO. Nothing here was probed
+    live and no URL was guessed.
+server:
+  name: BoltMCP MCP Server
+  transport: http
+  image: boltmcp-mcp-server
+  service_port: 3001
+  public_hostname_template: server.{global.domain}
+  replicas_default: 1
+  distribution: helm-chart
+  source: https://install.boltmcp.io/docs/configuration-reference
+tools: []
+tools_note: >-
+  There is no fixed BoltMCP tool catalog to record. The product's whole premise is that a customer
+  composes their own token-efficient tools and resources from their own REST/gRPC APIs, docs and API
+  hubs, declared in a json/yaml spec through the BoltMCP dashboard, and serves them from one or more
+  servers they create. Tools may be registered up front, retrieved on demand, or partially
+  registered and lazy-loaded (progressive disclosure). A tools/list against any deployment therefore
+  returns that tenant's tools, not BoltMCP's. No `tools/list` was probed, because no BoltMCP-operated
+  endpoint exists to probe.
+authorization:
+  model: oidc
+  issuer_template: https://auth.{global.domain}/realms/boltmcp
+  provider_default: keycloak
+  bring_your_own: [Okta, Microsoft Entra, Ping Identity, Keycloak]
+  client_id: boltmcp-mcp-server
+  client_registration: >-
+    MCP clients such as Claude are not pre-registered - the docs state they "register themselves via
+    the realm's CIMD client policies when connecting" (Client ID Metadata Document policies in
+    Keycloak).
+  source: https://install.boltmcp.io/docs/sign-in
+client_playground:
+  name: MCP Inspector
+  bundled: true
+  image: ghcr.io/modelcontextprotocol/inspector
+  image_tag: 2.2.0
+  public_hostname_template: inspector.{global.domain}
+  service_port: 6274
+  enabled_by_default: true
+  note: >-
+    The upstream Model Context Protocol Inspector, deployed by the chart as `boltmcp-mcp-inspector`
+    so operators can chat with their servers from inside their own deployment.
+  source: https://install.boltmcp.io/docs/configuration-reference
+controls:
+  kill_switch: >-
+    The product page advertises the ability to instantly disable servers, revoke user access, or
+    restrict specific tools. No API operation or dashboard procedure for this is published outside
+    the deployment.
+  rbac: delegated to the customer's identity provider and policy engine (OPA)
+  source: https://www.boltmcp.io/

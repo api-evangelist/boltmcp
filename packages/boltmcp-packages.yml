@@ -1,0 +1,132 @@
+generated: '2026-09-14'
+method: searched
+source: https://registry.npmjs.org/-/v1/search?text=%40boltmcp
+note: >-
+  BoltMCP publishes seven packages under the first-party npm scope @boltmcp (publisher dan-kwiat -
+  Dan Kwiatkowski, who also authors the BoltMCP blog). NONE of them is a client library for a BoltMCP
+  API, so no `SDKs` pointer is emitted - three are a re-published build of the upstream Model Context
+  Protocol TypeScript SDK from BoltMCP's fork (github.com/boltmcp/mcp-sdk-ts, branch `custom`), and
+  four are a jq filter engine plus its platform binaries. The product itself is distributed as an
+  authenticated OCI Helm chart, not through a public registry. PyPI, crates.io, RubyGems, NuGet,
+  Maven Central and pkg.go.dev return nothing first-party for boltmcp.
+packages:
+- language: typescript
+  registry: npm
+  name: "@boltmcp/mcp-sdk-server"
+  url: https://www.npmjs.com/package/@boltmcp/mcp-sdk-server
+  install: npm install @boltmcp/mcp-sdk-server
+  official: true
+  version: 2.0.0-alpha.5
+  published: '2026-04-15'
+  dist_tag_latest: 2.0.0-alpha.1
+  dist_tag_latest_published: '2026-03-18'
+  description: Model Context Protocol implementation for TypeScript - Server package
+  upstream: https://github.com/modelcontextprotocol/typescript-sdk
+  kind: republished-upstream-sdk
+  client_library_for_boltmcp: false
+  note: >-
+    package.json repository/homepage still point at the upstream modelcontextprotocol/typescript-sdk
+    project; the @boltmcp scope is BoltMCP's own build of its fork. The newest published version
+    (2.0.0-alpha.5) is ahead of the `latest` dist-tag (2.0.0-alpha.1), so `npm install` without a tag
+    resolves to the older release.
+- language: typescript
+  registry: npm
+  name: "@boltmcp/mcp-sdk-node"
+  url: https://www.npmjs.com/package/@boltmcp/mcp-sdk-node
+  install: npm install @boltmcp/mcp-sdk-node
+  official: true
+  version: 2.0.0-alpha.5
+  published: '2026-04-15'
+  dist_tag_latest: 2.0.0-alpha.2
+  dist_tag_latest_published: '2026-03-19'
+  description: Model Context Protocol implementation for TypeScript - Node.js middleware
+  upstream: https://github.com/modelcontextprotocol/typescript-sdk
+  kind: republished-upstream-sdk
+  client_library_for_boltmcp: false
+- language: typescript
+  registry: npm
+  name: "@boltmcp/mcp-sdk-express"
+  url: https://www.npmjs.com/package/@boltmcp/mcp-sdk-express
+  install: npm install @boltmcp/mcp-sdk-express
+  official: true
+  version: 2.0.0-alpha.5
+  published: '2026-04-15'
+  dist_tag_latest: 2.0.0-alpha.2
+  dist_tag_latest_published: '2026-03-19'
+  description: Express adapters for the Model Context Protocol TypeScript server SDK
+  upstream: https://github.com/modelcontextprotocol/typescript-sdk
+  kind: republished-upstream-sdk
+  client_library_for_boltmcp: false
+- language: typescript
+  registry: npm
+  name: "@boltmcp/jq"
+  url: https://www.npmjs.com/package/@boltmcp/jq
+  install: npm install @boltmcp/jq
+  official: true
+  version: 0.1.11
+  published: '2026-04-17'
+  license: MIT
+  description: jq filter engine for TypeScript, powered by jaq and NAPI-RS
+  repository: https://github.com/boltmcp/jq
+  kind: utility-library
+  client_library_for_boltmcp: false
+  note: >-
+    The declared source repository github.com/boltmcp/jq returns 404 to the GitHub API - the org
+    exposes only boltmcp/boltmcp and boltmcp/mcp-sdk-ts publicly, so this package's source is not
+    published.
+- language: rust
+  registry: npm
+  name: "@boltmcp/jaq-ts-darwin-arm64"
+  url: https://www.npmjs.com/package/@boltmcp/jaq-ts-darwin-arm64
+  official: true
+  version: 0.1.11
+  published: '2026-04-17'
+  kind: platform-binary
+  client_library_for_boltmcp: false
+  note: Native NAPI binary for @boltmcp/jq; installed as an optional dependency, not directly.
+- language: rust
+  registry: npm
+  name: "@boltmcp/jaq-ts-linux-x64-musl"
+  url: https://www.npmjs.com/package/@boltmcp/jaq-ts-linux-x64-musl
+  official: true
+  version: 0.1.11
+  published: '2026-04-17'
+  kind: platform-binary
+  client_library_for_boltmcp: false
+- language: rust
+  registry: npm
+  name: "@boltmcp/jaq-ts-linux-arm64-musl"
+  url: https://www.npmjs.com/package/@boltmcp/jaq-ts-linux-arm64-musl
+  official: true
+  version: 0.1.11
+  published: '2026-04-17'
+  kind: platform-binary
+  client_library_for_boltmcp: false
+- language: n/a
+  registry: oci
+  name: boltmcp
+  url: oci://europe-west2-docker.pkg.dev/boltmcp-platform/boltmcp-alpha/charts/boltmcp
+  install: >-
+    helm install boltmcp oci://europe-west2-docker.pkg.dev/boltmcp-platform/boltmcp-alpha/charts/boltmcp
+    --version ${BOLTMCP_VERSION} -n boltmcp -f ./config/values-prod.yaml --timeout 15m
+  official: true
+  version: 0.5.9
+  published: null
+  kind: helm-chart
+  client_library_for_boltmcp: false
+  source: https://install.boltmcp.io/docs/deployment
+  note: >-
+    The product itself. Distributed as an OCI Helm chart from a private Google Artifact Registry repo
+    that requires a BoltMCP-issued access key (HELM_REGISTRY_CONFIG), so there is no anonymous
+    metadata endpoint to read a publish date from. Version 0.5.9 is the value the deployment docs
+    pin as of this probe; `published` is recorded null because the registry is gated, not because it
+    was not checked.
+registries_checked:
+- {registry: npm, result: 7 first-party packages under scope @boltmcp}
+- {registry: pypi, result: none - pypi.org/pypi/boltmcp/json 404}
+- {registry: crates.io, result: none - api/v1/crates/boltmcp not first-party}
+- {registry: rubygems, result: none}
+- {registry: nuget, result: none}
+- {registry: maven-central, result: none}
+- {registry: pkg.go.dev, result: none}
+- {registry: oci (Google Artifact Registry), result: gated - BoltMCP Helm chart, key required}

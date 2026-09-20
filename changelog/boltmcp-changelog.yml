@@ -1,0 +1,40 @@
+generated: '2026-09-14'
+method: searched
+source: https://install.boltmcp.io/docs/migration-guide
+scheme: semver
+current_version: 0.5.9
+dated: false
+note: >-
+  BoltMCP publishes no dated changelog or release-notes feed. What it does publish is a version-keyed
+  Migration Guide listing the breaking changes to apply before upgrading, organised by minor series.
+  That is a real, published, structured record of what changed between versions, so it is captured
+  here as the changelog surface - with `dated: false` recorded honestly, because no entry carries a
+  date and no public release announcement exists. Releases reach design partners directly.
+entries:
+- version: 0.5.x
+  date: null
+  breaking: true
+  highlights:
+  - >-
+    OIDC Secret shape changed - two new keys required before upgrade
+    (keycloak-reconcile-client-secret, rest-api-to-keycloak-client-secret) and one removed
+    (rest-api-resource-server-client-secret).
+  - >-
+    The boltmcp-rest-api Keycloak client became redundant; harmless to leave, may be deleted from the
+    admin console.
+  additions: []
+  migration: https://install.boltmcp.io/docs/migration-guide#05x
+- version: 0.4.x
+  date: null
+  breaking: true
+  highlights:
+  - >-
+    Auth Secret shape changed - two new keys required before upgrade (mcp-inspector-api-token,
+    mcp-server-upstream-oauth-secret).
+  additions: []
+  migration: https://install.boltmcp.io/docs/migration-guide#04x
+related_version_signals:
+- {artifact: helm chart, version: 0.5.9, source: https://install.boltmcp.io/docs/deployment}
+- {artifact: keycloak image, version: 26.7.0-1, source: https://install.boltmcp.io/docs/configuration-reference}
+- {artifact: mcp inspector image, version: 2.2.0, source: https://install.boltmcp.io/docs/configuration-reference}
+- {artifact: "@boltmcp/mcp-sdk-server", version: 2.0.0-alpha.5, published: '2026-04-15', source: https://registry.npmjs.org/@boltmcp%2Fmcp-sdk-server}

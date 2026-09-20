@@ -64,5 +64,14 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-BoltMCP is a company surfaced via direct outreach and added to the network as a stub for full-pipeline profiling.
+BoltMCP Limited sells a self-hosted platform for creating and managing secured Model Context Protocol
+(MCP) servers inside an organization's own infrastructure. A single Helm chart deploys the whole stack
+into one Kubernetes namespace — a web dashboard, an internal REST API, a "gold image" MCP server, the
+MCP Inspector playground, and optional bundled PostgreSQL, Keycloak and HashiCorp Vault. Identity,
+RBAC, secrets and observability are delegated to whatever the customer already runs. BoltMCP operates
+no cloud service, publishes no OpenAPI and no pricing; access is by design-partner arrangement to a
+preview release.
+
 - https://www.boltmcp.io/
+- https://install.boltmcp.io/docs
+- https://github.com/boltmcp

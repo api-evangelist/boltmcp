@@ -1,0 +1,48 @@
+generated: '2026-09-14'
+method: searched
+source: https://install.boltmcp.io/docs/deployment
+note: >-
+  BoltMCP has no hosted sandbox, no test-vs-live key separation and no magic test values - there is
+  nothing to have test credentials for, because the company operates no service. What it does publish
+  is a documented evaluation path: a local plain-HTTP install template, an explicitly-named
+  "Evaluation" cluster tier, and an MCP client playground bundled into every deployment. Those are
+  captured here; no test value is invented.
+local_evaluation:
+  supported: true
+  target: Docker Desktop Kubernetes (or any local cluster)
+  values_file: config/values-local.yaml
+  template:
+    global_domain: boltmcp.local
+    tls_enabled: false
+  requirement: >-
+    An /etc/hosts entry pointing web.<domain>, auth.<domain>, server.<domain> and inspector.<domain>
+    at your ingress controller.
+  caveat: >-
+    On plain-HTTP installs set global.tls.enabled false rather than overriding URLs one by one - a
+    lone https:// issuer silently breaks token validation.
+  source: https://install.boltmcp.io/docs/deployment
+cluster_tiers:
+- {tier: Evaluation, use: trying BoltMCP, demos, throwaway dev clusters, default: true}
+- {tier: Production (minimum), use: internal use, small teams, single-region}
+- {tier: Production (scale), use: customer-facing, room to scale replicas and run upgrades}
+- source: https://github.com/boltmcp/boltmcp/blob/main/.claude/skills/install-boltmcp/SKILL.md
+playground:
+  name: MCP Inspector
+  type: bundled MCP client
+  hostname_template: inspector.{global.domain}
+  port: 6274
+  image: ghcr.io/modelcontextprotocol/inspector:2.2.0
+  enabled_by_default: true
+  note: >-
+    The company describes the product as bundling "an MCP client playground which you can use to chat
+    with your servers". It is the upstream MCP Inspector, deployed into the customer's namespace.
+  source: https://install.boltmcp.io/docs/configuration-reference
+test_credentials:
+  published: false
+  note: >-
+    Credentials are generated per deployment. The first admin user is provisioned at install time
+    (username boltmcp_admin, password read from the boltmcp-auth Secret). No shared or public test
+    credential exists, and none is invented here.
+  source: https://install.boltmcp.io/docs/sign-in
+test_clocks: null
+fixtures: null

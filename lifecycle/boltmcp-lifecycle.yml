@@ -1,0 +1,46 @@
+generated: '2026-09-14'
+method: searched
+source: https://install.boltmcp.io/docs/migration-guide
+versioning:
+  scheme: semver
+  artifact: Helm chart (oci .../charts/boltmcp)
+  current: 0.5.9
+  api_path_version: v1
+  docs: https://install.boltmcp.io/docs/deployment
+  note: >-
+    The product version customers track is the chart version, pinned explicitly via
+    BOLTMCP_VERSION. The deployment docs say to "use the latest release version you've been
+    provided" - releases are handed to design partners rather than announced publicly, so there is no
+    public release feed.
+upgrade_policy:
+  url: https://install.boltmcp.io/docs/migration-guide
+  rule: >-
+    "Read this page before every upgrade, and work through each section between the version you have
+    installed and the version you are moving to. Everything here must be done BEFORE helm upgrade."
+  breaking_changes_documented: true
+  minor_series_documented: ['0.5.x', '0.4.x']
+deprecation:
+  policy_url: null
+  sunset_header: false
+  note: >-
+    No deprecation or sunset policy is published, and no RFC 8594 Deprecation/Sunset header support
+    is documented. The closest published signal is the migration guide noting that the
+    `boltmcp-rest-api` Keycloak client became redundant at 0.5.x and may be deleted - a single
+    component retirement, not a policy. No Deprecation pointer is emitted.
+sla:
+  url: null
+  uptime_target: null
+  note: No SLA is published. The product runs on the customer's own infrastructure.
+status_page: null
+status_page_note: >-
+  No status page exists and none would be meaningful - BoltMCP operates no service on a customer's
+  behalf. The security hardening page tells the operator to run their own uptime checks on their
+  public endpoints. No StatusPage pointer is emitted.
+maturity:
+  stage: preview
+  evidence:
+  - Container registry path is .../boltmcp-alpha/...
+  - npm MCP SDK builds are published at 2.0.0-alpha.N
+  - The website's only call to action is "Become a design partner", whose dialog offers "access to
+    our preview release"
+deprecated_operations: []

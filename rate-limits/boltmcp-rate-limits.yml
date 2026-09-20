@@ -1,0 +1,27 @@
+generated: '2026-09-14'
+method: searched
+source: https://install.boltmcp.io/docs/security-hardening
+limit_count: 0
+rate_limits: []
+headers: []
+status_on_exhaustion: null
+note: >-
+  BoltMCP publishes no API rate limits, returns no documented rate-limit headers, and defines no
+  status code for exhaustion. It operates no API, so there is no quota to publish. The only
+  rate-limiting content in its documentation is advice to the SELF-HOSTER to add ingress-level limits
+  themselves (nginx.ingress.kubernetes.io/limit-rps "10", limit-connections "5") as part of
+  hardening a public deployment - recorded below as operator guidance, explicitly not as a
+  provider-published limit. An honest zero.
+operator_guidance:
+- scope: ingress (customer-configured)
+  limit: 10 requests per second
+  annotation: nginx.ingress.kubernetes.io/limit-rps
+  provider_enforced: false
+  source: https://install.boltmcp.io/docs/security-hardening
+- scope: ingress (customer-configured)
+  limit: 5 concurrent connections
+  annotation: nginx.ingress.kubernetes.io/limit-connections
+  provider_enforced: false
+  source: https://install.boltmcp.io/docs/security-hardening
+related_limits:
+- {kind: request body size, limit: 10 MB, status: 413, provider_enforced: true, source: 'https://install.boltmcp.io/docs/ingress-tls'}

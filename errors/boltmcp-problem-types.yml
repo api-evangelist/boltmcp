@@ -1,0 +1,50 @@
+generated: '2026-09-14'
+method: searched
+source: https://install.boltmcp.io/docs/troubleshooting
+format: http-status
+rfc9457: false
+note: >-
+  Derived from no OpenAPI - BoltMCP publishes none. These are the only HTTP error semantics BoltMCP
+  publishes publicly, and they come from the troubleshooting page, where each status is given a
+  specific operator-facing meaning. They are real and quotable, but they are a handful of operational
+  statuses rather than an API error reference; no error-code registry, no problem-details envelope,
+  and no remediation catalog is published. Recorded as-is rather than padded.
+problems:
+- status: 503
+  title: Vault not configured
+  detail: >-
+    Returned by the REST API's secret endpoints when vault.kubernetesAuth.enabled is off, or the
+    bootstrap has not yet created the auth method/role.
+  surface: /api/v1/secrets/*
+  remediation: Run the Vault bootstrap (https://install.boltmcp.io/docs/vault-secret-store)
+  source: https://install.boltmcp.io/docs/troubleshooting
+- status: 502
+  title: Vault unavailable
+  detail: >-
+    Returned by the REST API's secret endpoints when Vault is sealed or unreachable, or the
+    Kubernetes login was rejected. With the default Shamir seal, every Vault pod restart re-seals it.
+  surface: /api/v1/secrets/*
+  remediation: Check seal state with `vault status` and unseal, or configure auto-unseal
+  source: https://install.boltmcp.io/docs/troubleshooting
+- status: 413
+  title: Request Entity Too Large
+  detail: >-
+    Returned when an uploaded OpenAPI spec (or any request body) exceeds the platform's 10 MB limit.
+    The REST API enforces the limit itself; an ingress with a lower proxy-body-size will produce the
+    same status earlier in the path.
+  surface: the APIs page / any REST API request
+  remediation: Reduce the spec below 10 MB; raising the ingress limit above 10m has no effect
+  source: https://install.boltmcp.io/docs/ingress-tls
+- status: 403
+  title: HTTPS required
+  detail: >-
+    Returned by Keycloak to the chart's keycloak-reconcile hook when the master realm's Require SSL
+    setting rejects the in-cluster plain-HTTP admin call. Body observed in the docs is
+    {"error":"invalid_request","error_description":"HTTPS required"}.
+  surface: Keycloak admin API during helm install/upgrade
+  remediation: Set the master realm's Require SSL to None once, or route the hook over HTTPS
+  source: https://install.boltmcp.io/docs/troubleshooting
+gaps:
+- No error-code registry or decline-code equivalent is published.
+- No application/problem+json (RFC 9457) envelope is documented.
+- No 4xx/5xx catalogue could be derived, because no OpenAPI exists.

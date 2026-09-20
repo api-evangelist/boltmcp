@@ -1,0 +1,38 @@
+generated: '2026-09-14'
+method: searched
+source: https://install.boltmcp.io/docs/configuration-reference
+docs: https://install.boltmcp.io/docs/configuration-reference
+note: >-
+  BoltMCP publishes no OpenAPI, so derive-oauth-scopes.py had nothing to read. These are the
+  platform-owned OAuth realm resources the chart's `keycloak-reconcile` hook creates and re-applies
+  on every install and upgrade, named verbatim in the configuration reference. They are the only
+  authorization primitives BoltMCP publishes; everything else is defined by the customer in their own
+  identity provider.
+schemes:
+- name: oidc
+  provider: keycloak
+  realm: boltmcp
+  issuer_template: https://auth.{global.domain}/realms/boltmcp
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://auth.{global.domain}/realms/boltmcp/protocol/openid-connect/auth
+    tokenUrl: https://auth.{global.domain}/realms/boltmcp/protocol/openid-connect/token
+    note: >-
+      Standard Keycloak realm endpoints implied by the published issuer. Recorded as templates; not
+      probed, because no BoltMCP-operated realm is publicly reachable.
+scopes:
+- scope: boltmcp:rest-api:access
+  description: >-
+    Platform-owned client scope granting access to the BoltMCP internal REST API. Created and
+    reconciled by the chart's keycloak-reconcile hook Job.
+  flows: [authorizationCode]
+  sources: [https://install.boltmcp.io/docs/configuration-reference]
+roles:
+- role: mcp:manage
+  description: >-
+    Platform-owned realm role for managing MCP servers. Created and reconciled by the chart's
+    keycloak-reconcile hook Job alongside the OIDC clients and the rest-api access scope.
+  sources: [https://install.boltmcp.io/docs/configuration-reference]
+gaps:
+- No published scope/permission reference page exists. The dashboard documentation that covers
+  managing authorization ships inside the deployment, behind SSO, and is not on the public web.
