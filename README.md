@@ -64,14 +64,115 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-BoltMCP Limited sells a self-hosted platform for creating and managing secured Model Context Protocol
-(MCP) servers inside an organization's own infrastructure. A single Helm chart deploys the whole stack
-into one Kubernetes namespace — a web dashboard, an internal REST API, a "gold image" MCP server, the
-MCP Inspector playground, and optional bundled PostgreSQL, Keycloak and HashiCorp Vault. Identity,
-RBAC, secrets and observability are delegated to whatever the customer already runs. BoltMCP operates
-no cloud service, publishes no OpenAPI and no pricing; access is by design-partner arrangement to a
-preview release.
+BoltMCP is a UK company (BoltMCP Limited) selling a self-hosted platform for creating and managing secured Model Context Protocol (MCP) servers inside an organization's own infrastructure. A single Helm chart deploys the full stack into one Kubernetes namespace - a web dashboard, an internal REST API, a "gold image" MCP server, the MCP Inspector playground, and optional bundled PostgreSQL, Keycloak and HashiCorp Vault. The product's pitch is token-efficient MCP: progressive disclosure and lazy tool registration instead of preloading every tool into an agent's context, with tools composed declaratively from existing REST/gRPC APIs, company docs and API hubs. Auth, RBAC, secrets and observability are delegated to infrastructure the customer already runs. Nothing is operated by BoltMCP as a cloud service - there is no vendor-hosted API, no public sign-up and no published pricing; access is by design-partner arrangement to a preview release.
 
-- https://www.boltmcp.io/
-- https://install.boltmcp.io/docs
-- https://github.com/boltmcp
+**Areas:** Company · MCP · Agents · Artificial Intelligence · Kubernetes · Self-Hosted · Enterprise · Identity · Developer Tools
+
+## BoltMCP on APIs.io
+
+Everything profiled for BoltMCP is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/boltmcp/](https://apis.io/providers/boltmcp/)** — or go straight to one of the APIs or properties below.
+
+### APIs (2)
+
+- [BoltMCP MCP Server](https://apis.io/apis/boltmcp/boltmcp-mcp-server/) — The MCP server the BoltMCP Helm chart deploys into the customer's own Kubernetes cluster. Customers define their own servers and tools through the BoltMCP…
+- [BoltMCP REST API](https://apis.io/apis/boltmcp/boltmcp-rest-api/) — The internal REST API service (boltmcp-rest-api, container port 3003) that backs the BoltMCP dashboard and the deployed MCP servers. It is deliberately NOT…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [BoltMCP MCP Server](https://apis.io/servers/boltmcp/boltmcp-mcp-server/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Boltmcp Authentication](https://apis.io/security/boltmcp/boltmcp-authentication/)
+- [Boltmcp Domain Security](https://apis.io/security/boltmcp/boltmcp-domain-security/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Boltmcp Scopes](https://apis.io/scopes/boltmcp/boltmcp-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Boltmcp Plans Pricing](https://apis.io/plans/boltmcp/boltmcp-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Boltmcp Rate Limits](https://apis.io/rate-limits/boltmcp/boltmcp-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.boltmcp.io/)
+- [Documentation](https://install.boltmcp.io/docs)
+- [Getting started](https://install.boltmcp.io/docs/prerequisites)
+- [Blog](https://www.boltmcp.io/blog)
+- [GitHub](https://github.com/boltmcp)
+
+## API Evangelist rating
+
+**Kin Score 22.8** — emerging · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 68.3 |
+| Contract quality | 0.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 18.4 |
+| Developer ergonomics | 50.0 |
+| Access clarity | 0.0 |
+
+**Agent readiness 16.7** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | templated |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | yes |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 24.5** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/boltmcp/](https://apis.io/providers/boltmcp/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for BoltMCP: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/boltmcp/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
